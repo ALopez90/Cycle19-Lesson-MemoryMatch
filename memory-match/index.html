@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Memory Match</title>
+    <!-- TODO Link the stylesheet -->
+  </head>
+  <body>
+    <header class="hud">
+      <h1>Memory Match</h1>
+      <div class="stats">
+        <span>Turns: <strong id="turns">0</strong></span>
+        <button id="reset">Reset</button>
+      </div>
+    </header>
+
+    <main>
+      <section
+        id="board"
+        class="board"
+        aria-label="Memory cards grid"
+      ></section>
+      <p id="win" class="win" hidden>
+        <!-- TODO Add winning message! -->
+      </p>
+    </main>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>

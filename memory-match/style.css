@@ -1,0 +1,110 @@
+/* Root-level CSS variables make it easy to theme/tune sizes without hunting through the file. */
+:root {
+  --gap: 12px;       /* Space between cards; tweak for density. */
+  --card: 96px;      /* Card width/height; controls grid scale. */
+  --radius: 14px;    /* Rounded corners; friendlier visuals. */
+  --speed: 0.25s;    /* Animation duration; consistent timing. */
+}
+
+/* Reset box sizing so padding/borders don’t inflate elements unexpectedly; makes layout predictable. */
+* { box-sizing: border-box; }
+
+/* Global page styling for readability and comfortable spacing. */
+body {
+  font-family: system-ui, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background: #0f172a;
+  color: #e2e8f0;
+  text-align: center;
+}
+
+/* HUD (title + controls) */
+.hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+/* Styling for the button! */
+button {
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 0;
+  cursor: pointer;
+  background: #1f2937;
+  color: #e2e8f0;
+  transition: background 0.2s ease;
+}
+
+/* What happens to the button on hover */
+button:hover {
+  background: #334155;
+}
+
+/* The game board: rows grow automatically with more cards. */
+.board {
+  display: grid;                                        /* Grid is ideal for regular card layouts. */
+  grid-template-columns: repeat(4, var(--card));        /* 4 columns → 4×4 with 16 cards; 4×3 if 12 cards. */
+  gap: var(--gap);                                      /* Consistent spacing between cards. */
+  justify-content: center;                              /* Center the grid under the HUD. */
+}
+
+/* Each card is a clickable 3D flip container. */
+.card {
+  width: var(--card);           /* Square footprint makes matching patterns easy to scan. */
+  height: var(--card);          /* Height matches width. */
+  perspective: 800px;           /* Enables 3D flip effect on inner wrapper. */
+  cursor: pointer;              /* Reinforces interactivity. */
+}
+
+/* The inner wrapper performs the Y-rotation for the flip. */
+.card-inner {
+  width: 100%;                  /* Fill the card container. */
+  height: 100%;                 /* Maintain square shape. */
+  position: relative;           /* Contain absolute-positioned faces. */
+  transform-style: preserve-3d; /* Keep front/back faces in 3D space for realistic flip. */
+  transition: transform var(--speed) ease; /* Smooth, consistent animation timing. */
+}
+
+/* Both faces share base styling for size, rounding, and center content. */
+.face {
+  position: absolute;            /* Stack faces directly on top of each other. */
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius);
+  display: grid;
+  place-items: center;
+  font-size: 44px;
+  user-select: none;
+  backface-visibility: hidden;  /* Hide mirrored backside when rotated. */
+}
+
+/* Front face starts rotated so it’s hidden until the card flips. */
+.front {
+  transform: rotateY(180deg);
+}
+
+/* Back face shows a colorful gradient and a “?” by default. */
+.back {
+  background: linear-gradient(135deg, #0ea5e9, #6366f1);
+  color: #0f172a;
+}
+
+/* The flip: toggling .flipped rotates the inner wrapper to reveal the front. */
+.card.flipped .card-inner {
+  transform: rotateY(180deg); /* Core flip effect tied to a simple class for easy logic. */
+}
+
+/* Matched state adds a green highlight to provide clear success feedback. */
+.matched .face {
+  /* TODO Add the highlight */
+}
+
+/* Win text styling! */
+.win {
+  margin-top: 20px;
+  font-size: 1.2rem;
+}
